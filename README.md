@@ -1,6 +1,10 @@
 # Straighten Short Curves
 Glyphs.app plug-in for straightening curve segments shorter than a certain threshold length. The handles are deleted and the curve segment is turned into a line segment. Useful for cleaning up a vectorized scan or avoiding *Remove Overlap* errors at export.
 
+Also, keep in mind that many short curves have negative effects on the rendering performance and file size of your font.
+
+![StraightenShortCurves](StraightenShortCurves.png)
+
 ### Installation
 
 1. One-click install *Straighten Short Curves* from *Window > Plugin Manager > Plugins*
