@@ -44,15 +44,18 @@ def straightenSmallCurves(layer, threshold=12):
 					nnnn.type = LINE
 					del p.nodes[i+2]
 					del p.nodes[i+1]
+					n.checkConnection()
 		# catch segment around start node:
 		if len(p.nodes) >= 5:
-			for i in range(len(p.nodes)-1,len(p.nodes)-1,-1):
+			for i in range(len(p.nodes)-1,len(p.nodes)-3,-1):
 				n, nn, nnn, nnnn = segmentPoints(p, i)
 				if nn.type==OFFCURVE and nnn.type==OFFCURVE and nnnn.type!=OFFCURVE and nnn.index > n.index:
 					if segmentLength(n, nn, nnn, nnnn) < threshold:
 						nnnn.type = LINE
 						for index in sorted([nn.index, nnn.index], reverse=True):
 							del p.nodes[sorted]
+					p.nodes[0].checkConnection()
+					p.nodes[-1].checkConnection()
 
 class StraightenShortCurves(FilterWithDialog):
 
