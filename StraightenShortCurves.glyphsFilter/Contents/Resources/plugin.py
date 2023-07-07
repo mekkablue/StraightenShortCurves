@@ -19,22 +19,40 @@ import objc
 from GlyphsApp import *
 from GlyphsApp.plugins import *
 
+def segmentPoints(p, i):
+	n = p.nodes[i]
+	nn = n.nextNode
+	nnn = n.nextNode.nextNode
+	nnnn = n.nextNode.nextNode.nextNode
+	return n, nn, nnn, nnnn
+
+@objc.python_method
+def segmentLength(n, nn, nnn, nnnn):
+	length = distance(n.position, nn.position)
+	length += distance(nn.position, nnn.position)
+	length += distance(nnn.position, nnnn.position)
+	return length
+
 @objc.python_method
 def straightenSmallCurves(layer, threshold=12):
 	for p in layer.paths:
 		for i in range(len(p.nodes)-1,-1,-1):
-			n = p.nodes[i]
-			nn = n.nextNode
-			nnn = n.nextNode.nextNode
-			nnnn = n.nextNode.nextNode.nextNode
+			n, nn, nnn, nnnn = segmentPoints(p, i)
 			if nn.type==OFFCURVE and nnn.type==OFFCURVE and nnnn.type!=OFFCURVE and not nnn.index < n.index:
-				length = distance(n.position, nn.position)
-				length += distance(nn.position, nnn.position)
-				length += distance(nnn.position, nnnn.position)
-				if length < threshold:
+				# leaves out segment around start node (avoid reordering of indexes)
+				if segmentLength(n, nn, nnn, nnnn) < threshold:
 					nnnn.type = LINE
 					del p.nodes[i+2]
 					del p.nodes[i+1]
+		# catch segment around start node:
+		if len(p.nodes) >= 5:
+			for i in range(len(p.nodes)-1,len(p.nodes)-1,-1):
+				n, nn, nnn, nnnn = segmentPoints(p, i)
+				if nn.type==OFFCURVE and nnn.type==OFFCURVE and nnnn.type!=OFFCURVE and nnn.index > n.index:
+					if segmentLength(n, nn, nnn, nnnn) < threshold:
+						nnnn.type = LINE
+						for index in sorted([nn.index, nnn.index], reverse=True)
+							del p.nodes[sorted]
 
 class StraightenShortCurves(FilterWithDialog):
 

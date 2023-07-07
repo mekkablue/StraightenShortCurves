@@ -13,15 +13,15 @@
 	<key>CFBundleName</key>
 	<string>StraightenShortCurves</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string> <!-- 1.0 -->
+	<string>1.0.1</string> <!-- 1.0 -->
 	<key>CFBundleVersion</key>
-	<string>1</string> <!-- 123 -->
+	<string>2</string> <!-- 123 -->
 	<key>UpdateFeedURL</key>
 	<string>https://raw.githubusercontent.com/mekkablue/StraightenShortCurves/master/StraightenShortCurves.glyphsFilter/Contents/Info.plist</string>
 	<key>productPageURL</key>
 	<string>https://github.com/mekkablue/StraightenShortCurves</string>
 	<key>productReleaseNotes</key>
-	<string>Initial Commit</string>
+	<string>Also process segment around start node.</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright, Rainer Erich Scheichelbauer, 2023</string>
 	<key>NSPrincipalClass</key>
