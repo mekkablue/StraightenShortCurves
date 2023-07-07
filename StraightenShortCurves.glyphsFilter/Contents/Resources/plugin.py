@@ -51,7 +51,7 @@ def straightenSmallCurves(layer, threshold=12):
 				if nn.type==OFFCURVE and nnn.type==OFFCURVE and nnnn.type!=OFFCURVE and nnn.index > n.index:
 					if segmentLength(n, nn, nnn, nnnn) < threshold:
 						nnnn.type = LINE
-						for index in sorted([nn.index, nnn.index], reverse=True)
+						for index in sorted([nn.index, nnn.index], reverse=True):
 							del p.nodes[sorted]
 
 class StraightenShortCurves(FilterWithDialog):
